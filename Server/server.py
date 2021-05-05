@@ -26,11 +26,11 @@ class listRequestHandler(tornado.web.RequestHandler):
         fileHandler.close()
         self.write(f'The languges are {json.dumps(lang)}')
     
-    #For this POST method, we pass data as argument instead in request body and is sent using postman
     def post(self):
-        lang = self.get_argument('lang')
+        #Request Body Format {'lang' : 'JS'}
+        body = json.loads(self.request.body)
         fileHandler = open('Server/lang.txt', 'a')
-        fileHandler.write(lang + '\n')
+        fileHandler.write(body['lang'] + '\n')
         fileHandler.close
         self.write(json.dumps({'status' : 'Language added.'}))
 
