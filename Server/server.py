@@ -1,5 +1,6 @@
 import tornado.web
 import tornado.ioloop
+import json
 
 class basicRequestHandler(tornado.web.RequestHandler):
     def get(self):
@@ -15,15 +16,22 @@ class queryParamRequestHandler(tornado.web.RequestHandler):
         self.write(f'Favorite Language is {lang}')
 
 class resourceParamRequestHandler(tornado.web.RequestHandler):
-    def get(self, name):
-        self.write(f'Favorite Language is {name}')
+    def get(self, name, id):
+        self.write(f'Favorite Language is {name} with id {id}')
+
+class listRequestHandler(tornado.web.RequestHandler):
+    def get(self):
+        fileHandler = open('Server/lang.txt', 'r')
+        lang = fileHandler.read().splitlines()
+        self.write(f'The languges are {json.dumps(lang)}' )
 
 if __name__ == '__main__' :
     app = tornado.web.Application([
         (r'/', basicRequestHandler),
         (r'/html', htmlRequestHandler),
         (r'/query',queryParamRequestHandler),
-        (r'/([a-z]+)',resourceParamRequestHandler),
+        (r'/([a-z]+)/([0-9]+)',resourceParamRequestHandler),
+        (r'/list', listRequestHandler)
     ])
     port = 12345
     app.listen(port)
