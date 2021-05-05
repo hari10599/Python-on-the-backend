@@ -14,11 +14,16 @@ class queryParamRequestHandler(tornado.web.RequestHandler):
         lang = self.get_arguments('lang')
         self.write(f'Favorite Language is {lang}')
 
+class resourceParamRequestHandler(tornado.web.RequestHandler):
+    def get(self, name):
+        self.write(f'Favorite Language is {name}')
+
 if __name__ == '__main__' :
     app = tornado.web.Application([
         (r'/', basicRequestHandler),
         (r'/html', htmlRequestHandler),
-        (r'/query',queryParamRequestHandler)
+        (r'/query',queryParamRequestHandler),
+        (r'/([a-z]+)',resourceParamRequestHandler),
     ])
     port = 12345
     app.listen(port)
