@@ -12,7 +12,7 @@ class htmlRequestHandler(tornado.web.RequestHandler):
 
 class queryParamRequestHandler(tornado.web.RequestHandler):
     def get(self):
-        lang = self.get_arguments('lang')
+        lang = self.get_argument('lang')
         self.write(f'Favorite Language is {lang}')
 
 class resourceParamRequestHandler(tornado.web.RequestHandler):
@@ -23,7 +23,17 @@ class listRequestHandler(tornado.web.RequestHandler):
     def get(self):
         fileHandler = open('Server/lang.txt', 'r')
         lang = fileHandler.read().splitlines()
-        self.write(f'The languges are {json.dumps(lang)}' )
+        fileHandler.close()
+        self.write(f'The languges are {json.dumps(lang)}')
+    
+    #For this POST method, we pass data as argument instead in request body and is sent using postman
+    def post(self):
+        lang = self.get_argument('lang')
+        fileHandler = open('Server/lang.txt', 'a')
+        fileHandler.write(lang + '\n')
+        fileHandler.close
+        self.write(json.dumps({'status' : 'Language added.'}))
+
 
 if __name__ == '__main__' :
     app = tornado.web.Application([
