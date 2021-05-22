@@ -21,7 +21,7 @@ class resourceParamRequestHandler(tornado.web.RequestHandler):
 
 class listRequestHandler(tornado.web.RequestHandler):
     def get(self):
-        fileHandler = open('Server/lang.txt', 'r')
+        fileHandler = open('Tornado/languages.txt', 'r')
         lang = fileHandler.read().splitlines()
         fileHandler.close()
         self.write(f'The languges are {json.dumps(lang)}')
@@ -29,7 +29,7 @@ class listRequestHandler(tornado.web.RequestHandler):
     def post(self):
         #Request Body Format {'lang' : 'JS'}
         body = json.loads(self.request.body)
-        fileHandler = open('Server/lang.txt', 'a')
+        fileHandler = open('Tornado/languages.txt', 'a')
         fileHandler.write(body['lang'] + '\n')
         fileHandler.close
         self.write(json.dumps({'status' : 'Language added.'}))
