@@ -10,7 +10,7 @@ class basicRequestHandler(tornado.web.RequestHandler):
 
 if __name__ == '__main__' :
     app = tornado.web.Application([
-        (r'/', basicRequestHandler)
+        (r'/basic', basicRequestHandler)
     ])
     port = sys.argv[1]
     app.listen(port)
