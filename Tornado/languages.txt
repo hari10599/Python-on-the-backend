@@ -1,5 +1,0 @@
-C
-C++
-Java
-JS
-Rust

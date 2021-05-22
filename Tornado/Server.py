@@ -4,7 +4,7 @@ import json
 
 class basicRequestHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write('Hello World')
+        self.write('Hello Gamer')
 
 class htmlRequestHandler(tornado.web.RequestHandler):
     def get(self):
@@ -12,27 +12,27 @@ class htmlRequestHandler(tornado.web.RequestHandler):
 
 class queryParamRequestHandler(tornado.web.RequestHandler):
     def get(self):
-        lang = self.get_argument('lang')
-        self.write(f'Favorite Language is {lang}')
+        game = self.get_argument('game')
+        self.write(f'Favorite Game is {game}')
 
 class resourceParamRequestHandler(tornado.web.RequestHandler):
     def get(self, name, id):
-        self.write(f'Favorite Language is {name} with id {id}')
+        self.write(f'Favorite game is {name} with Playing hours {id}')
 
 class listRequestHandler(tornado.web.RequestHandler):
     def get(self):
-        fileHandler = open('Tornado/languages.txt', 'r')
-        lang = fileHandler.read().splitlines()
+        fileHandler = open('Tornado/games.txt', 'r')
+        games = fileHandler.read().splitlines()
         fileHandler.close()
-        self.write(f'The languges are {json.dumps(lang)}')
+        self.write(f'The languges are {json.dumps(games)}')
     
     def post(self):
         #Request Body Format {'lang' : 'JS'}
         body = json.loads(self.request.body)
-        fileHandler = open('Tornado/languages.txt', 'a')
-        fileHandler.write(body['lang'] + '\n')
+        fileHandler = open('Tornado/games.txt', 'a')
+        fileHandler.write(body['game'] + '\n')
         fileHandler.close
-        self.write(json.dumps({'status' : 'Language added.'}))
+        self.write(json.dumps({'status' : 'Game added.'}))
 
 
 if __name__ == '__main__' :
