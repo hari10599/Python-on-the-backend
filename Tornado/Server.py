@@ -24,10 +24,10 @@ class listRequestHandler(tornado.web.RequestHandler):
         fileHandler = open('Tornado/games.txt', 'r')
         games = fileHandler.read().splitlines()
         fileHandler.close()
-        self.write(f'The languges are {json.dumps(games)}')
+        self.write(f'The Games are {json.dumps(games)}')
     
     def post(self):
-        #Request Body Format {'lang' : 'JS'}
+        #Request Body Format {'game' : 'CSGO'}
         body = json.loads(self.request.body)
         fileHandler = open('Tornado/games.txt', 'a')
         fileHandler.write(body['game'] + '\n')
